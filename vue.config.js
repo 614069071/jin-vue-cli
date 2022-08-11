@@ -2,8 +2,9 @@ const path = require('path');
 const Component = require('unplugin-vue-components/webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
-const resolve = (dir) => path.resolve(__dirname, dir);
 
+const resolve = (dir) => path.resolve(__dirname, dir);
+const isProd = process.env.NODE_ENV === 'production';
 const git = new GitRevisionPlugin();
 const version = { BRANCH: git.branch(), VERSION: git.version(), COMMITHASH: git.commithash(), TIME: Date() };
 
