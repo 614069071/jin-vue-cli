@@ -10,15 +10,15 @@ const version = { BRANCH: git.branch(), VERSION: git.version(), COMMITHASH: git.
 isProd && fs.writeFile('./public/version', JSON.stringify(version), (err) => err && console.log('err', err));
 
 const quicks = [
-  { key: '@', value: 'src' },
-  { key: 'utils', value: 'src/utils' },
-  { key: 'store', value: 'src/store' },
-  { key: 'views', value: 'src/views' },
-  { key: 'assets', value: 'src/assets' },
-  { key: 'router', value: 'src/router' },
-  { key: 'styles', value: 'src/styles' },
-  { key: 'request', value: 'src/request' },
-  { key: 'components', value: 'src/components' },
+  { k: '@', v: 'src' },
+  { k: 'utils', v: 'src/utils' },
+  { k: 'store', v: 'src/store' },
+  { k: 'views', v: 'src/views' },
+  { k: 'assets', v: 'src/assets' },
+  { k: 'router', v: 'src/router' },
+  { k: 'styles', v: 'src/styles' },
+  { k: 'request', v: 'src/request' },
+  { k: 'components', v: 'src/components' },
 ];
 
 module.exports = {
@@ -35,7 +35,7 @@ module.exports = {
     // },
   },
   chainWebpack: (config) => {
-    quicks.forEach(({ key, value }) => config.resolve.alias.set(key, resolve(value)));
+    quicks.forEach(({ k, v }) => config.resolve.alias.set(k, resolve(v)));
   },
   configureWebpack: {
     plugins: [
