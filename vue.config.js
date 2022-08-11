@@ -1,7 +1,25 @@
-const path = require("path");
-const Component = require("unplugin-vue-components/webpack");
-const TerserPlugin = require("terser-webpack-plugin");
-const resolve = dir => path.resolve(__dirname, dir);
+const path = require('path');
+const Component = require('unplugin-vue-components/webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const resolve = (dir) => path.resolve(__dirname, dir);
+
+const git = new GitRevisionPlugin();
+const version = { BRANCH: git.branch(), VERSION: git.version(), COMMITHASH: git.commithash(), TIME: Date() };
+
+isProd && fs.writeFile('./public/version', JSON.stringify(version), (err) => err && console.log('err', err));
+
+const quicks = [
+  { key: '@', value: 'src' },
+  { key: 'utils', value: 'src/utils' },
+  { key: 'store', value: 'src/store' },
+  { key: 'views', value: 'src/views' },
+  { key: 'assets', value: 'src/assets' },
+  { key: 'router', value: 'src/router' },
+  { key: 'styles', value: 'src/styles' },
+  { key: 'request', value: 'src/request' },
+  { key: 'components', value: 'src/components' },
+];
 
 module.exports = {
   lintOnSave: false,
@@ -16,21 +34,13 @@ module.exports = {
     //   },
     // },
   },
-  chainWebpack: config => {
-    config.resolve.alias
-      .set("@", resolve("src"))
-      .set("utils", resolve("src/utils"))
-      .set("store", resolve("src/store"))
-      .set("views", resolve("src/views"))
-      .set("router", resolve("src/router"))
-      .set("styles", resolve("src/styles"))
-      .set("request", resolve("src/request"))
-      .set("components", resolve("src/components"));
+  chainWebpack: (config) => {
+    quicks.forEach(({ key, value }) => config.resolve.alias.set(key, resolve(value)));
   },
   configureWebpack: {
     plugins: [
       Component({
-        dirs: ["src/components"],
+        dirs: ['src/components'],
         // dts: "src/types/vue-components.d.ts",
         directoryAsNamespace: true,
       }),

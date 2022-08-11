@@ -27,6 +27,7 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "unplugin-vue-components": "^0.19.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "git-revision-webpack-plugin": "3.0.6"
   }
 }
